@@ -24,9 +24,10 @@ module GrapeDoorkeeper
     end
 
     def verify_token(token_string)
+      ap token_string
       return unless protected_endpoint?
       token = Doorkeeper::AccessToken.authenticate(token_string)
-
+      ap token
       if token
         if !token.accessible?
           error_out(401, 'expired_token')
