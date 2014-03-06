@@ -48,7 +48,7 @@ module GrapeDoorkeeper
 
       throw :error,
             # message:  {error: error},
-            message: { message: error, errors: [] }
+            message: { message: error, errors: [] },
             status: status,
             headers: {
               'Content-Type' => 'application/json',
