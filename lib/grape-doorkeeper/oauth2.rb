@@ -45,6 +45,11 @@ module GrapeDoorkeeper
       end
     end
 
+    def error!(message, status = nil, headers = nil)
+      status = settings[:default_error_status] unless status
+      throw :error, message: message, status: status, headers: headers
+    end
+
     def error_out(status, error)
       scopes = options[:doorkeeper].instance_variable_get(:@scopes)
 
