@@ -29,7 +29,8 @@ module GrapeDoorkeeper
       if token
         if !token.accessible?
           # error_out(401, 'expired_token')
-          error_out(401, 'The access token has expired')
+          error!( { message: 'The access token has expired', errors: [] }, 401)
+          # error_out(401, 'The access token has expired')
         else
           if options[:doorkeeper].send(:validate_token_scopes, token)
             env['api.token'] = token
@@ -39,7 +40,8 @@ module GrapeDoorkeeper
         end
       else
         # error_out(401, 'invalid_token')
-        error_out(401, 'The access token is invalid')
+        # error_out(401, 'The access token is invalid')
+        error!( { message: 'The access token is invalid', errors: [] }, 401)
       end
     end
 
@@ -47,8 +49,8 @@ module GrapeDoorkeeper
       scopes = options[:doorkeeper].instance_variable_get(:@scopes)
 
       throw :error,
-            # message:  {error: error},
-            message: { message: error, errors: [] },
+            message:  {error: error},
+            # message: { message: error, errors: [] },
             status: status,
             headers: {
               'Content-Type' => 'application/json',
